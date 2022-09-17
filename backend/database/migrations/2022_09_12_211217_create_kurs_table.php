@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('naziv');
             $table->string('broj_casova');
             $table->string('cena');
+            $table->string('opis');
             $table->string('predmet_id');
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ class Post extends Model
     protected $fillable = [
         'predmet_id',
         'sadrzaj',
+        'datoteka',
         'user_id',
     ];
 

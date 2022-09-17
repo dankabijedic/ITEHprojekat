@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('predmet_id');
             $table->string('sadrzaj');
+            $table->string('datoteka');
             $table->string('user_id');
             $table->timestamps();
         });

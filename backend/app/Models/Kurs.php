@@ -13,6 +13,7 @@ class Kurs extends Model
         'naziv',
         'broj_casova',
         'cena',
+        'opis',
         'predmet_id'
     ];
 
