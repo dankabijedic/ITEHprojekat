@@ -4,6 +4,7 @@ import Navbar from "./Components/Navbar";
 import Cart from "./Components/Cart";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Posts from "./Components/Posts";
 function App() {
   const [cartNum, setCartNum] = useState(0);
   const [cartItems, setCartItems] = useState([]);
@@ -36,6 +37,30 @@ function App() {
       amount: 0,
       price: 8000,
     },
+  ]);
+
+  const [posts] = useState([
+    {
+      id: 1,
+      title: "Programiranje 1",
+      content:
+        "Chocolate is a food made from cacao beans. It is used in many desserts like pudding, cakes and candy",
+      attachment: "none"
+    },
+    {
+      id: 2,
+      title: "Neki predmet",
+      content:
+        "Chocolate is a food made from cacao beans. It is used in many desserts like pudding, cakes and candy",
+      attachment: "none"
+    },
+    {
+      id: 3,
+      title: "JOs jasa",
+      content:
+        "Chocolate is a food made from cacao beans. It is used in many desserts like pudding, cakes and candy",
+      attachment: "none"
+    }
   ]);
 
   const addToCart = (id) => {
@@ -94,6 +119,7 @@ function App() {
           element={<Courses courses={courses} onAdd={addToCart} />}
         />
         <Route path="/cart" element={<Cart cartItems={cartItems} cartNum={cartNum} totalPrice={totalPrice}/>} />
+        <Route path="/posts" element={<Posts posts={posts}/>} />
       </Routes>
     </BrowserRouter>
 

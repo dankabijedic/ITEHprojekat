@@ -5,11 +5,19 @@ import { Link } from "react-router-dom";
 function Navbar({ cartNum }) {
   return (
     <div className="navBar">
-      <Link to="/">Kursevi</Link>
-      <Link to="/cart" className="cart-items">
-        <ImCart />
-        <div className="cart-num">{cartNum}</div>
-      </Link>
+      <div className="btn">
+        <Link to="/">Kursevi</Link>
+      </div>
+      <div className="btn">
+        <Link to="/posts">Materijali</Link>
+      </div>
+      <div className="btn">
+        <Link to="/cart" className="cart-items">
+          <ImCart />
+          <div className="cart-num">{cartNum}</div>
+        </Link>
+      </div>
+
       <div
         className="links"
         style={{

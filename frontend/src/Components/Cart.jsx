@@ -13,6 +13,7 @@ const Cart = ({ cartItems, cartNum, totalPrice }) => {
       <div className="cart-footer">
         <div className="cart-amount">Broj proizvoda u korpi je: {cartNum}</div>
         <div className="cart-amount">Ukupna cena je: {totalPrice}</div>
+        <a className="btn">Kupite</a>
       </div>
     </div>
   );
