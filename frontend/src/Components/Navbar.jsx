@@ -1,14 +1,23 @@
 import React from "react";
 import { ImCart } from "react-icons/im";
+import { Link } from "react-router-dom";
 
 function Navbar({ cartNum }) {
   return (
     <div className="navBar">
-      <a>Kursevi</a>
-      <a className="cart-items">
-        <ImCart style={{ marginLeft: 10 }} />
+      <Link to="/">Kursevi</Link>
+      <Link to="/cart" className="cart-items">
+        <ImCart />
         <div className="cart-num">{cartNum}</div>
-      </a>
+      </Link>
+      <div
+        className="links"
+        style={{
+          top: 0,
+          marginLeft: "auto",
+          flexDirection: "column",
+        }}
+      ></div>
     </div>
   );
 }

@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
   const [cartNum, setCartNum] = useState(0);
-
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(()=> {
+    calcPrice();
+  }, [cartItems]);
   const [courses] = useState([
     {
       id: 1,
@@ -45,6 +49,12 @@ function App() {
           const a = cartNum + 1;
           setCartNum(a);
 
+          if(course.amount === 1) {
+            updateCart(course);
+          } else {
+            refreshCart();
+          }
+
           console.log(
             "course id=",
             course.id,
@@ -57,6 +67,24 @@ function App() {
     });
   };
 
+  const updateCart = (course) => {
+    setCartItems([...cartItems, course]);
+    calcPrice();
+  }
+
+  const refreshCart = () => {
+    const newItems = courses.filter((course) => course.amount > 0);
+    setCartItems(newItems);
+  }
+
+  const calcPrice = () => {
+    let totalPrice = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      totalPrice += cartItems[i].price * cartItems[i].amount;
+    }
+    setTotalPrice(totalPrice);
+  }
+
   return (
     <BrowserRouter>
       <Navbar cartNum={cartNum} />
@@ -65,39 +93,12 @@ function App() {
           path="/"
           element={<Courses courses={courses} onAdd={addToCart} />}
         />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} cartNum={cartNum} totalPrice={totalPrice}/>} />
       </Routes>
     </BrowserRouter>
-    // <div className="App">
-    //   <Navbar cartNum={cartNum} />
-    //   <Courses courses={courses} onAdd={addToCart} />
-    //   <Cart />
-    // </div>
-    // <BrowserRouter>
-    //   <Navbar cartNum={cartNum} />
-    //   <Routes>
-    //     <Route
-    //       path="/"
-    //       element={[
-    //         //        <Header title="Dobrodosli u" subtitle="Piceriju Palermo" />,
-    //         <Courses courses={courses} onAdd={addToCart} />,
-    //       ]}
-    //     />
-    //     <Route
-    //       path="/cart"
-    //       element={
-    //         <Cart
-    //           cartItems={cartItems}
-    //           cartNum={cartNum}
-    //           //s             totalPrice={totalPrice}
-    //         />
-    //       }
-    //     />
-    //     {/* <Route path="/about" element={<About />} />
-    //   <Route path="/meni" element={<Items items={items} onOrder={order} />} />
-    //   <Route path="/contact" element={<Contact />} /> */}
-    //   </Routes>
-    // </BrowserRouter>
+
+  
+   
   );
 }
 
