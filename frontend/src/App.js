@@ -5,10 +5,15 @@ import Cart from "./Components/Cart";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Posts from "./Components/Posts";
+import LoginForm from "./Components/LoginForm";
+import RegisterForm from "./Components/RegisterForm";
+
+
 function App() {
   const [cartNum, setCartNum] = useState(0);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [token, setToken] = useState();
   useEffect(()=> {
     calcPrice();
   }, [cartItems]);
@@ -110,16 +115,21 @@ function App() {
     setTotalPrice(totalPrice);
   }
 
+  function addToken(auth_token) {
+    setToken(auth_token);
+  }
   return (
     <BrowserRouter>
-      <Navbar cartNum={cartNum} />
+      
       <Routes>
         <Route
           path="/"
-          element={<Courses courses={courses} onAdd={addToCart} />}
+          element={[<Navbar token={token}></Navbar>,<Courses courses={courses} onAdd={addToCart} />]}
         />
-        <Route path="/cart" element={<Cart cartItems={cartItems} cartNum={cartNum} totalPrice={totalPrice}/>} />
-        <Route path="/posts" element={<Posts posts={posts}/>} />
+        <Route path="/cart" element={[<Navbar></Navbar>, <Cart cartItems={cartItems} cartNum={cartNum} totalPrice={totalPrice}/>]} />
+        <Route path="/posts" element={[<Navbar></Navbar>, <Posts posts={posts}/>]} />
+        <Route path="/login" element={<LoginForm addToken={addToken}/>} />
+        <Route path="/register" element={<RegisterForm/>} />
       </Routes>
     </BrowserRouter>
 

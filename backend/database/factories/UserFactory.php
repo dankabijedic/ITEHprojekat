@@ -20,8 +20,8 @@ class UserFactory extends Factory
         return [
             'ime' => $this->faker->name(),
             'prezime' => $this->faker->lastName(),
-            'godina_studija' => $this->faker->numberBetween($min = 1, $max = 4),
-            'broj_telefona' => $this->faker->phoneNumber(),
+            // 'godina_studija' => $this->faker->numberBetween($min = 1, $max = 4),
+            // 'broj_telefona' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
