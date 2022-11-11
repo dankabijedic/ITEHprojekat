@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PostResource;
-use App\Models\Post;
+use App\Http\Resources\KursResource;
+use App\Models\Kurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class PostController extends Controller
+
+class KursController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return $posts;
+        $kursevi = Kurs::all();
+        return $kursevi;
     }
 
     /**
@@ -28,6 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -39,44 +41,46 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'predmet_id' => 'required',
-            'sadrzaj' => 'required',
-            'datoteka',
-            'user_id' => 'required'
+            'naziv' => 'required',
+            'broj_casova' => 'required',
+            'cena' => 'required',
+            'opis',
+            'predmet_id' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
-        $post = Post::create([
-            'predmet_id' => request('predmet_id'),
-            'sadrzaj' => request('sadrzaj'),
-            'datoteka' => request('datoteka'),
-            'user_id' => Auth::user()->id
+        $kurs = Kurs::create([
+            'naziv' => $request->naziv,
+            'broj_casova' => $request->broj_casova,
+            'cena' => $request->cena,
+            'opis' => $request->opis,
+            'predmet_id' => $request->predmet_id,
         ]);
 
-        return response()->json(['Post created successfully.', new PostResource($post)]);
+        return response()->json(['Kurs created successfully.', new KursResource($kurs)]);
     }
 
     /**
      * Display the specified resource.
-     *u
-     * @param  \App\Models\Post  $post
+     *
+     * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(Kurs $kurs)
     {
-        return new PostResource($post);
+        return new KursResource($kurs);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Kurs $kurs)
     {
         //
     }
@@ -85,33 +89,31 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Kurs $kurs)
     {
-        request()->validate([
-            'sadrzaj' => 'required',
-        ]);
-
-        $post->update([
-            'predmet_id' => request('predmet_id'),
-            'sadrzaj' => request('sadrzaj'),
-            'datoteka' => request('datoteka'),
-        ]);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Kurs $kurs)
     {
-        $success = $post->delete();
+        $success = $kurs->delete();
         return [
             'success' => $success,
         ];
+    }
+
+    public function getKurs($course_id)
+    {
+        $course = Kurs::find($course_id);
+        return $course;
     }
 }

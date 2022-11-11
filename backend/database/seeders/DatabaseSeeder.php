@@ -3,6 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Cart;
+use App\Models\Kurs;
+use App\Models\Post;
+use App\Models\Predmet;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +20,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Kurs::truncate();
+        Post::truncate();
+        User::truncate();
+        Cart::truncate();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Post::factory(5)->create();
+        Kurs::factory(5)->create();
+        Cart::factory(5)->create();
     }
 }

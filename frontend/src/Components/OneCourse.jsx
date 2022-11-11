@@ -1,7 +1,9 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { BsFillCartPlusFill } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 
-function OneCourse({ course, onAdd }) {
+function OneCourse({ course, onAdd, token, currentUser }) {
   return (
     <div className="card">
       <div className="photo-container">
@@ -12,14 +14,22 @@ function OneCourse({ course, onAdd }) {
         />
       </div>
       <div className="card-body">
-        <h3 className="card-title">{course.title}</h3>
-        <p className="card-price">{course.price}</p>
-        <p className="card-description">{course.description}</p>
-
-        <button className="btn" onClick={() => onAdd(course.id)}>
-          <BsFillCartPlusFill />
-          <h2> Dodaj u korpu</h2>
-        </button>
+        <h3 className="card-title">{course.naziv}</h3>
+        <p className="card-price">{course.cena}</p>
+        <p className="card-description">{course.opis}</p>
+        {/* <p className="card-something">{currentUser.data}</p> */}
+        {token == null ? (
+          <div></div>
+        ) : currentUser != null && currentUser.data.role == "1" ? (
+          <div className="btn">
+            <Link to="/edit-course">Izmeni kurs</Link>
+          </div>
+        ) : (
+          <button className="btn" onClick={() => onAdd(course.id)}>
+            <BsFillCartPlusFill />
+            <h2> Dodaj u korpu</h2>
+          </button>
+        )}
       </div>
     </div>
   );

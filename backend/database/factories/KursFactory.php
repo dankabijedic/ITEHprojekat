@@ -17,7 +17,11 @@ class KursFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'naziv' => $this->faker->title(),
+            'broj_casova' => $this->faker->randomNumber(),
+            'cena' => $this->faker->randomNumber(),
+            'opis' => $this->faker->text(),
+            'predmet_id' => $this->faker->randomNumber(),
         ];
     }
 }

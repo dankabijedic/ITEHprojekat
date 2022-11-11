@@ -14,6 +14,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+
+        $this->middleware('guest');
+
         $validator = Validator::make($request->all(), [
             'ime' => 'required|string|max:255',
             'prezime' => 'required|string|max:255',
