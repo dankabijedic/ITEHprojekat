@@ -26,6 +26,7 @@ function LoginForm({ addToken, getCourses, getCurrentUser }) {
           addToken(res.data.access_token);
           getCurrentUser();
           getCourses();
+          console.log("Dal se uopste ulogovalo");
           navigate("/courses");
         }
       })

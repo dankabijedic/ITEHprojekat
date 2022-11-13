@@ -5,7 +5,7 @@ function CartItem({ item, onDelete }) {
     <div id="cart-item" className="card">
       <div className="card-body">
         <div className="photo-container">
-          <button className="btn" onClick={() => onDelete(item)}>
+          <button className="btn" onClick={(e) => onDelete(item, e)}>
             <img
               className="card-img-top"
               src="https://picsum.photos/200"

@@ -14,11 +14,5 @@ class Kurs extends Model
         'broj_casova',
         'cena',
         'opis',
-        'predmet_id'
     ];
-
-    public function predmet()
-    {
-        return $this->belongsTo(Predmet::class);
-    }
 }

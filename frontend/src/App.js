@@ -14,48 +14,32 @@ import EditCourse from "./Components/Admin/EditCourse";
 
 function App() {
   const [cartNum, setCartNum] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [token, setToken] = useState();
-  useEffect(()=> {
-    calcPrice();
-  }, [cartItems]);
-
+  
   const [courses, setCourses] = useState();
   useEffect(() => {
     if (courses == null) {
       axios.get("api/courses").then((res) => {
-
-        console.log(res.data);
         setCourses(res.data);
       });
     }
   }, [courses]);
 
-
   const updateCart = (course) => {
+    console.log(cartCourses);
+    console.log(course);
     if(!cartCourses.includes(course)) {
     setCartCourses([...cartCourses, course]);
+    }
+    calcPrice(cartCourses);
+  }
+
+  const refreshCart = (course_id) => {
+    setCartCourses((current) => current.filter((removeCourse) => removeCourse.id != course_id));
+    setCartNum(cartNum  - 1);
     calcPrice();
-    console.log(cartCourses);
-    } else {
- //     alert("Ovaj kurs ste vec dodali u korpu!");
-     refreshCart();
-    }
-  }
-
-  const refreshCart = () => {
-    const newItems = courses.filter((course) => course.amount > 0);
-    setCartCourses(newItems);
-  }
-
-  const calcPrice = () => {
-    let totalPrice = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      totalPrice += cartItems[i].cena;
-    }
-    setTotalPrice(totalPrice);
-  }
+  };
 
   function addToken(auth_token) {
     setToken(auth_token);
@@ -67,12 +51,14 @@ function App() {
     if(course.id === id) {
 
     let isAdded = false;
-     for(var i = 0; i< cartCourses.length; i++) {
-      if(cartCourses[i].id === course.id) {
+
+
+  
+    cartCourses.map((oneCartCourse) => {
+      if(oneCartCourse.id === course.id) {
         isAdded = true;
-        break;
       }
-    };
+    })
 
     if(isAdded === false) {
         const data = {
@@ -91,12 +77,7 @@ function App() {
             alert("Success", res.data.message, "success");
           }
         });
-
-
-        const a = cartNum + 1;
-        setCartNum(a);
         updateCart(course);
-        kolicina = kolicina + 1;
         getUserCart();
       };
      
@@ -112,17 +93,13 @@ function App() {
      )};
 
 
-const deleteCartItem = (e, course) => {
+const deleteCartItem = (course, e) => {
 
   cart.map((oneCart) => {
-    console.log(oneCart);
-    console.log(course);
-    console.log(currentUser);
-    if(oneCart.course_id === 
+    if(oneCart.course_id == 
       course.id 
-      && oneCart.user_id === 
-      currentUser.id) {
- 
+      && oneCart.user_id == 
+      currentUser.data.id) {
   e.preventDefault();
   var config = {
     headers: {
@@ -134,7 +111,8 @@ const deleteCartItem = (e, course) => {
   axios.delete(`/api/delete-cartitem/${oneCart.id}`, config).then((res) => {
     if (res.data.status === 200) {
       alert("Success", res.data.message, "success");
-      thisClicked.closest("tr").remove();
+      thisClicked.closest("DIV.card-body").remove();
+      refreshCart(oneCart.course_id);
     } else if (res.data.status === 404) {
       alert("Error", res.data.message, "error");
       thisClicked.innerText = "Remove";
@@ -145,9 +123,9 @@ const deleteCartItem = (e, course) => {
 };
 
 
-const[currentUser, setCurrentUser] = useState({});
+const[currentUser, setCurrentUser] = useState();
 function getCurrentUser() {
-
+if(token != null) {
   var config = {
     headers: {
       Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
@@ -156,16 +134,16 @@ function getCurrentUser() {
  
   axios.get(`api/profile`, config).then((res) => {
       setCurrentUser(res);
-      console.log(res);
-      console.log(currentUser);
+      console.log(res.data);
     })
-  };
+  }
+};
 
 const [cart, setCart] = useState({});
-var totalCartPrice = 0;
 
 const getUserCart = () => {
   getCurrentUser();
+  {console.log(currentUser)};
   let isMounted = true;
   var config = {
     headers: {
@@ -175,19 +153,16 @@ const getUserCart = () => {
 
   let count = 0; 
   axios.get(`api/cart`, config).then((res) => {
-    console.log(res);
     if (isMounted) {
-      console.log(res);
      if(count === 0) {
-        console.log(res);
+      console.log(currentUser);
+
         setCart(res.data.cart);
+        setCartNum(res.data.cart.length);
         isMounted = false;
         count = 1;
     }
   }});
-
-  console.log(cart);
-
   return () => {
     isMounted = false;
   };
@@ -196,36 +171,67 @@ const getUserCart = () => {
 const [cartCourses, setCartCourses] = useState([]);
 
 function getCourses() {
-    getCurrentUser();
-    console.log(currentUser);
-    getUserCart();
-    console.log(cart);
+  getCurrentUser();
+  console.log(currentUser);
+  getUserCart();
+  let exists = false;
     cart.map((newCartItem) => {
-      console.log(newCartItem);
-      console.log(currentUser);
       if (newCartItem.user_id == currentUser.data.id) {
        axios.get("api/courses/" + newCartItem.course_id).then((res) => {
-        console.log(res);
-        setCartCourses([res.data]);
+      
+        cartCourses.map((courseHelp) => {
+          if(courseHelp.id === newCartItem.course_id) {
+            exists = true;
+          }
+        })
+        if(exists === false){
+        setCartCourses([...cartCourses, res.data]);
+        }
       });
     }
   });
-  console.log(cartCourses);
 };
 
+
+let totalCartPrice = 0;
+function calcPrice() {
+  if(token != null ) {
+  console.log("Ovde je doslo");
+  console.log(cartCourses);
+  if(cartCourses.length == 0) {
+    setTotalPrice(0);
+  } else {
+  cartCourses.map((oneC) => {
+    console.log("A ovde");
+    console.log(oneC);
+    totalCartPrice += oneC.cena;
+    setTotalPrice(totalCartPrice);
+    console.log("Uslo.")
+  });
+}
+  console.log("Proslo");
+  console.log(totalPrice);
+}
+}
+
+useEffect(()=> {
+  calcPrice();
+}, [cartCourses]);
   return (
     <BrowserRouter>
       
       <Routes>
-        <Route path="/" element={<Navbar token={token} />}>
+        <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} />}>
          <Route path="courses" element={<Courses onAdd={addToCart} courses={courses} token={token} currentUser={currentUser}/>} />
         <Route path="posts" element={<Posts token={token} />} />
         <Route path="cart" element={<Cart cartCourses={cartCourses} cartNum={cartNum} totalPrice={totalPrice} token={token} currentUser={currentUser} onDelete={deleteCartItem}/>} />
         </Route>
-        <Route path="/login" element={<LoginForm addToken={addToken} getCurrentUser={getCurrentUser} getCourses={getCourses}/>} />
+        <Route path="/login" element={<LoginForm addToken={addToken} getCurrentUser={getCurrentUser} getCourses={getCourses} 
+        calcPrice={calcPrice} 
+        getUserCart={getUserCart}/>} />
         <Route path="/register" element={<RegisterForm/>} /> 
         <Route path="/add-course" element={<AddCourse token={token} />} />
-        {/* <Route path="/edit-course" element={<EditCourse />} /> */}
+        <Route path="/update-course/:id" element={<EditCourse />} />
         
         
       </Routes>

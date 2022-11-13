@@ -11,16 +11,10 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'predmet_id',
         'sadrzaj',
         'datoteka',
         'user_id',
     ];
-
-    public function predmet()
-    {
-        return $this->belongsTo(Predmet::class);
-    }
 
     public function user()
     {

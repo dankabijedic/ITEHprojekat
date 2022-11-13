@@ -18,7 +18,6 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'predmet_id' => $this->faker->randomNumber(),
             'sadrzaj' => $this->faker->text(),
             'datoteka' => $this->faker->text(),
             'user_id' => User::factory(),

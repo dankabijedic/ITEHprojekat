@@ -22,7 +22,7 @@ function OneCourse({ course, onAdd, token, currentUser }) {
           <div></div>
         ) : currentUser != null && currentUser.data.role == "1" ? (
           <div className="btn">
-            <Link to="/edit-course">Izmeni kurs</Link>
+            <Link to={`/update-course/${course.id}`}>Izmeni kurs</Link>
           </div>
         ) : (
           <button className="btn" onClick={() => onAdd(course.id)}>

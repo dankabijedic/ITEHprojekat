@@ -45,7 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::group(['middleware' => ['auth:sanctum', 'isAdmin']], function () {
     Route::resource('/add-course', KursController::class)->only(['store']);
-    Route::resource('/edit-course/{id}', KursController::class)->only(['update']);
+    Route::get('edit-course/{id}', [KursController::class, 'edit']);
+    Route::post('/update-course/{id}', [KursController::class, 'update']);
 });
 
 Route::resource('/posts', PostController::class)->only(['index']);

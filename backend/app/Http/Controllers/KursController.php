@@ -6,7 +6,6 @@ use App\Http\Resources\KursResource;
 use App\Models\Kurs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 
 class KursController extends Controller
@@ -80,10 +79,20 @@ class KursController extends Controller
      * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kurs $kurs)
+    public function edit($id)
     {
-        //
+        $course = Kurs::find($id);
+        if ($course) {
+            return response()->json([
+                'course' => $course,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Nije pronadjen kurs.',
+            ]);
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -92,9 +101,39 @@ class KursController extends Controller
      * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kurs $kurs)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required',
+            'broj_casova' => 'required',
+            'cena' => 'required',
+            'opis',
+            'predmet_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->messages(),
+            ]);
+        } else {
+            $course = Kurs::find($id);
+            if ($course) {
+                $course->naziv = $request->input('naziv');
+                $course->broj_casova = $request->input('broj_casova');
+                $course->cena = $request->input('cena');
+                $course->opis = $request->input('opis');
+                $course->predmet_id = $request->input('predmet_id');
+                $course->update();
+
+                return response()->json([
+                    'message' => 'Kurs je uspesno izmenjen.',
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Kurs nije pronadjen.',
+                ]);
+            }
+        }
     }
 
     /**
