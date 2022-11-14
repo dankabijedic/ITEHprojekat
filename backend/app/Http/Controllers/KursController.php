@@ -142,8 +142,9 @@ class KursController extends Controller
      * @param  \App\Models\Kurs  $kurs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kurs $kurs)
+    public function destroy($course_id)
     {
+        $kurs = Kurs::find($course_id);
         $success = $kurs->delete();
         return [
             'success' => $success,

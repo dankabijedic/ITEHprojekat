@@ -4,6 +4,24 @@ import { BsFillCartPlusFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
 function OneCourse({ course, onAdd, token, currentUser }) {
+  function onDelete(course) {
+    var config = {
+      headers: {
+        Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
+      },
+    };
+    if (currentUser.data.role == "1") {
+      console.log(currentUser.data.role);
+      axios.delete(`/api/delete-course/${course.id}`, config).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert("Kurs je uspesno obrisan.");
+        } else {
+          alert("Brisanje nije uspelo.", res.data.message, "error");
+        }
+      });
+    }
+  }
   return (
     <div className="card">
       <div className="photo-container">
@@ -21,8 +39,13 @@ function OneCourse({ course, onAdd, token, currentUser }) {
         {token == null ? (
           <div></div>
         ) : currentUser != null && currentUser.data.role == "1" ? (
-          <div className="btn">
-            <Link to={`/update-course/${course.id}`}>Izmeni kurs</Link>
+          <div>
+            <div className="btn">
+              <Link to={`/update-course/${course.id}`}>Izmeni kurs</Link>
+            </div>
+            <div className="btn" onClick={(e) => onDelete(course)}>
+              Obrisi kurs
+            </div>
           </div>
         ) : (
           <button className="btn" onClick={() => onAdd(course.id)}>

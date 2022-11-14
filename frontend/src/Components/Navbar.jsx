@@ -3,7 +3,7 @@ import { ImCart } from "react-icons/im";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Navbar({ cartNum, token, addToken }) {
+function Navbar({ cartNum, token, addToken, currentUser }) {
   const navigate = useNavigate();
   function handleLogout() {
     var config = {
@@ -29,20 +29,34 @@ function Navbar({ cartNum, token, addToken }) {
   var AuthButtons = "";
   if (token == null) {
     AuthButtons = (
-      <div className="btn">
-        <Link to="/login">Login</Link>
+      <div className="navBar">
+        <div className="btn">
+          <Link to="/courses">Kursevi</Link>
+        </div>
+        <div className="btn">
+          <Link to="/posts">Materijali</Link>
+        </div>
+        <div className="btn">
+          <Link to="/login">Login</Link>
+        </div>
+        <div className="btn">
+          <Link to="/register">Register</Link>
+        </div>
+        <div
+          className="links"
+          style={{
+            top: 0,
+            marginLeft: "auto",
+            flexDirection: "column",
+          }}
+        ></div>
       </div>
     );
-  } else {
+  } else if (currentUser != null && currentUser.data.role == "1") {
+    {
+      console.log(currentUser.data.role);
+    }
     AuthButtons = (
-      <div className="btn" onClick={handleLogout}>
-        <Link to="/courses">Logout</Link>
-      </div>
-    );
-  }
-
-  return (
-    <div>
       <div className="navBar">
         <div className="btn">
           <Link to="/courses">Kursevi</Link>
@@ -53,14 +67,9 @@ function Navbar({ cartNum, token, addToken }) {
         <div className="btn">
           <Link to="/add-course">Dodaj kurs</Link>
         </div>
-        {AuthButtons}
-        <div className="btn">
-          <Link to="/cart" className="cart-items">
-            <ImCart />
-            <div className="cart-num">{cartNum}</div>
-          </Link>
+        <div className="btn" onClick={handleLogout}>
+          <Link to="/logout">Logout</Link>
         </div>
-
         <div
           className="links"
           style={{
@@ -70,6 +79,40 @@ function Navbar({ cartNum, token, addToken }) {
           }}
         ></div>
       </div>
+    );
+  } else {
+    AuthButtons = (
+      <div className="navBar">
+        <div className="btn">
+          <Link to="/courses">Kursevi</Link>
+        </div>
+        <div className="btn">
+          <Link to="/posts">Materijali</Link>
+        </div>
+        <div className="btn">
+          <Link to="/cart" className="cart-items">
+            <ImCart />
+            <div className="cart-num">{cartNum}</div>
+          </Link>
+        </div>
+        <div className="btn" onClick={handleLogout}>
+          <Link to="/logout">Logout</Link>
+        </div>
+        <div
+          className="links"
+          style={{
+            top: 0,
+            marginLeft: "auto",
+            flexDirection: "column",
+          }}
+        ></div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {AuthButtons}
       <Outlet />
     </div>
   );

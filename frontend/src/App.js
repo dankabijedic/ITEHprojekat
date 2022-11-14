@@ -221,7 +221,7 @@ useEffect(()=> {
     <BrowserRouter>
       
       <Routes>
-        <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} />}>
+        <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} currentUser={currentUser}/>}>
          <Route path="courses" element={<Courses onAdd={addToCart} courses={courses} token={token} currentUser={currentUser}/>} />
         <Route path="posts" element={<Posts token={token} />} />
         <Route path="cart" element={<Cart cartCourses={cartCourses} cartNum={cartNum} totalPrice={totalPrice} token={token} currentUser={currentUser} onDelete={deleteCartItem}/>} />
