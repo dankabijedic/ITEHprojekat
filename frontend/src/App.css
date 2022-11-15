@@ -478,18 +478,24 @@ a.icon-link:hover {
 
 
 .post .btn {
-  background: white;
-  color: #363738;
-  font-weight: bold;
+  background: #ff3f40;
+  color: #fff;
+  font-weight: 700;
   outline: none;
-  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 25px -7px #4c4c4c;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 7px;
   height: 50px;
   line-height: 50px;
-  display: inline-block;
+  display: inline-flex;
   padding: 0;
   border: none;
+  cursor: pointer;
+  padding: 1.5em 3.1em;
+  font-size: 0.8em;
+  letter-spacing: 1.3px;
+  flex-direction: row;
+  align-items: center;
 }
 
 .post .btn :focus {
@@ -497,8 +503,7 @@ a.icon-link:hover {
 }
 
 .post .btn :hover {
-  background: #ffb535;
-  color: #fff;
+  color: rgb(12, 8, 241);
 }
 
 .post .btn .btn--with-icon {
@@ -522,7 +527,7 @@ a.icon-link:hover {
   body{
 	margin:0;
 	color:#6a6f8c;
-	background:#c8c8c8;
+	background:#43C59E;
 	font:600 16px/18px 'Open Sans',sans-serif;
 }
 *,:after,:before{box-sizing:border-box}

@@ -10,6 +10,8 @@ import RegisterForm from "./Components/RegisterForm";
 import axios from "axios";
 import AddCourse from "./Components/Admin/AddCourse";
 import EditCourse from "./Components/Admin/EditCourse";
+import AddPost from "./Components/Admin/AddPost";
+import EditPost from "./Components/Admin/EditPost";
 
 
 function App() {
@@ -232,7 +234,8 @@ useEffect(()=> {
         <Route path="/register" element={<RegisterForm/>} /> 
         <Route path="/add-course" element={<AddCourse token={token} />} />
         <Route path="/update-course/:id" element={<EditCourse />} />
-        
+        <Route path="/add-post" element={<AddPost token={token} />} />
+        <Route path="/update-post/:id" element={<EditPost />} />
         
       </Routes>
     </BrowserRouter>

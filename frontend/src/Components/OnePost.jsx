@@ -1,6 +1,26 @@
+import axios from "axios";
 import React from "react";
+import { Link } from "react-router-dom";
 
-function OnePost({ post }) {
+function OnePost({ post, onAdd, token, currentUser}) {
+  function onDelete(post) {
+    var config = {
+      headers: {
+        Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
+      },
+    };
+    if (currentUser.data.role == "1") {
+      console.log(currentUser.data.role);
+      axios.delete(`/api/delete-post/${post.id}`, config).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert("Materijal je uspesno obrisan.");
+        } else {
+          alert("Brisanje nije uspelo.", res.data.message, "error");
+        }
+      });
+    }
+  }
   return (
     <div className="post" key={post.id}>
       <article className="blog-card">
@@ -23,17 +43,18 @@ function OnePost({ post }) {
         <div className="blog-card__info">
           <h5>{post.sadrzaj}</h5>
           <p>
-            <a href="#" className="icon-link mr-3">
-              <i className="fa fa-pencil-square-o"></i> Tony Jahson
-            </a>
-            <a href="#" className="icon-link">
-              <i className="fa fa-comments-o"></i> 150
-            </a>
+            <a href="download.php?file=sample">Download</a>
           </p>
           <p>{post.datoteka}</p>
-          <a href="#" className="btn btn--with-icon">
-            <i className="btn-icon fa fa-long-arrow-right"></i>READ MORE
-          </a>
+          <div className="btn">
+            <Link to={`/update-post/${post.id}`}>Izmeni materijal</Link>
+          </div>
+          <div className="btn" onClick={(e) => onDelete(post)}>
+              Obrisi materijal
+            </div>
+          <div className="btn">
+            <Link to={'/download.php'}>Download</Link>
+          </div>
         </div>
       </article>
     </div>

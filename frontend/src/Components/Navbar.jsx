@@ -67,6 +67,9 @@ function Navbar({ cartNum, token, addToken, currentUser }) {
         <div className="btn">
           <Link to="/add-course">Dodaj kurs</Link>
         </div>
+        <div className="btn">
+          <Link to="/add-post">Dodaj materijal</Link>
+        </div>
         <div className="btn" onClick={handleLogout}>
           <Link to="/logout">Logout</Link>
         </div>
