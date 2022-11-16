@@ -48,6 +48,11 @@ Route::group(['middleware' => ['auth:sanctum', 'isAdmin']], function () {
     Route::get('edit-course/{id}', [KursController::class, 'edit']);
     Route::post('/update-course/{id}', [KursController::class, 'update']);
     Route::delete('/delete-course/{id}', [KursController::class, 'destroy']);
+
+    Route::resource('/add-post', PostController::class)->only(['store']);
+    Route::get('edit-post/{id}', [PostController::class, 'edit']);
+    Route::post('/update-post/{id}', [PostController::class, 'update']);
+    Route::delete('/delete-post/{id}', [PostController::class, 'destroy']);
 });
 
 Route::resource('/posts', PostController::class)->only(['index']);

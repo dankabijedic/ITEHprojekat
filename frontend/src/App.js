@@ -10,6 +10,8 @@ import RegisterForm from "./Components/RegisterForm";
 import axios from "axios";
 import AddCourse from "./Components/Admin/AddCourse";
 import EditCourse from "./Components/Admin/EditCourse";
+import AddPost from "./Components/Admin/AddPost";
+import EditPost from "./Components/Admin/EditPost";
 
 
 function App() {
@@ -125,7 +127,7 @@ const deleteCartItem = (course, e) => {
 
 const[currentUser, setCurrentUser] = useState();
 function getCurrentUser() {
-if(token != null) {
+// if(token != null) {
   var config = {
     headers: {
       Authorization: "Bearer " + window.sessionStorage.getItem("auth_token"),
@@ -134,16 +136,15 @@ if(token != null) {
  
   axios.get(`api/profile`, config).then((res) => {
       setCurrentUser(res);
-      console.log(res.data);
     })
-  }
+  // }
 };
 
 const [cart, setCart] = useState({});
 
 const getUserCart = () => {
-  getCurrentUser();
   {console.log(currentUser)};
+  getCurrentUser();
   let isMounted = true;
   var config = {
     headers: {
@@ -171,6 +172,7 @@ const getUserCart = () => {
 const [cartCourses, setCartCourses] = useState([]);
 
 function getCourses() {
+  console.log(currentUser);
   getCurrentUser();
   console.log(currentUser);
   getUserCart();
@@ -217,22 +219,27 @@ function calcPrice() {
 useEffect(()=> {
   calcPrice();
 }, [cartCourses]);
+
+
+
+
   return (
     <BrowserRouter>
       
       <Routes>
-        <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} currentUser={currentUser}/>}>
+        <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} currentUser={currentUser} getCourses={getCourses}/>}>
          <Route path="courses" element={<Courses onAdd={addToCart} courses={courses} token={token} currentUser={currentUser}/>} />
-        <Route path="posts" element={<Posts token={token} />} />
+         <Route path="posts" element={<Posts token={token} currentUser={currentUser}/>} />
         <Route path="cart" element={<Cart cartCourses={cartCourses} cartNum={cartNum} totalPrice={totalPrice} token={token} currentUser={currentUser} onDelete={deleteCartItem}/>} />
         </Route>
-        <Route path="/login" element={<LoginForm addToken={addToken} getCurrentUser={getCurrentUser} getCourses={getCourses} 
+        <Route path="/login" element={<LoginForm addToken={addToken} getCurrentUser={getCurrentUser} currentUser={currentUser} token={token} 
         calcPrice={calcPrice} 
         getUserCart={getUserCart}/>} />
         <Route path="/register" element={<RegisterForm/>} /> 
         <Route path="/add-course" element={<AddCourse token={token} />} />
         <Route path="/update-course/:id" element={<EditCourse />} />
-        
+        <Route path="/add-post" element={<AddPost token={token} />} />
+        <Route path="/update-post/:id" element={<EditPost />} />
         
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import { ImCart } from "react-icons/im";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Navbar({ cartNum, token, addToken, currentUser }) {
+function Navbar({ cartNum, token, addToken, currentUser, getCourses }) {
   const navigate = useNavigate();
   function handleLogout() {
     var config = {
@@ -67,6 +67,9 @@ function Navbar({ cartNum, token, addToken, currentUser }) {
         <div className="btn">
           <Link to="/add-course">Dodaj kurs</Link>
         </div>
+        <div className="btn">
+          <Link to="/add-post">Dodaj materijal</Link>
+        </div>
         <div className="btn" onClick={handleLogout}>
           <Link to="/logout">Logout</Link>
         </div>
@@ -89,7 +92,7 @@ function Navbar({ cartNum, token, addToken, currentUser }) {
         <div className="btn">
           <Link to="/posts">Materijali</Link>
         </div>
-        <div className="btn">
+        <div className="btn" onClick={getCourses}>
           <Link to="/cart" className="cart-items">
             <ImCart />
             <div className="cart-num">{cartNum}</div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-function LoginForm({ addToken, getCourses, getCurrentUser }) {
+function LoginForm({ addToken, getCurrentUser, currentUser, token }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -25,7 +25,7 @@ function LoginForm({ addToken, getCourses, getCurrentUser }) {
           window.sessionStorage.setItem("auth_token", res.data.access_token);
           addToken(res.data.access_token);
           getCurrentUser();
-          getCourses();
+          // getCourses();
           console.log("Dal se uopste ulogovalo");
           navigate("/courses");
         }
@@ -35,6 +35,12 @@ function LoginForm({ addToken, getCourses, getCurrentUser }) {
         alert("Koisnicko ime ili lozinka nisu validni!");
       });
   }
+
+  useEffect(() => {
+    if (token != null) {
+      getCurrentUser();
+    }
+  }, [currentUser]);
 
   return (
     <section className="background-radial-gradient overflow-hidden">

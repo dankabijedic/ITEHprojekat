@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import OnePost from "./OnePost";
 
-function Posts() {
+function Posts({ currentUser, token }) {
   const [posts, setPosts] = useState();
   useEffect(() => {
     if (posts == null) {
@@ -22,7 +22,14 @@ function Posts() {
             {posts == null ? (
               <></>
             ) : (
-              posts.map((post) => <OnePost post={post} key={post.id} />)
+              posts.map((post) => (
+                <OnePost
+                  post={post}
+                  key={post.id}
+                  currentUser={currentUser}
+                  token={token}
+                />
+              ))
             )}
           </div>
         </div>

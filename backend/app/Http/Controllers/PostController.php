@@ -76,9 +76,18 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if ($post) {
+            return response()->json([
+                'post' => $post,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Nije pronadjen materijal.'
+            ]);
+        }
     }
 
     /**
@@ -88,17 +97,37 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        request()->validate([
+        $validator = Validator::make($request->all(), [
+            'predmet_id' => 'required',
             'sadrzaj' => 'required',
+            'datoteka',
+            'user_id' => 'required'
         ]);
 
-        $post->update([
-            'predmet_id' => request('predmet_id'),
-            'sadrzaj' => request('sadrzaj'),
-            'datoteka' => request('datoteka'),
-        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->messages()
+            ]);
+        } else {
+            $post = Post::find($id);
+            if ($post) {
+                $post->predmet_id = $request->input('predmet_id');
+                $post->sadrzaj = $request->input('sadrzaj');
+                $post->datoteka = $request->input('datoteka');
+                $post->user_id = $request->input('user_id');
+                $post->update();
+
+                return response()->json([
+                    'message' => 'Materijal je uspesno izmenjen.',
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Nije pronadjen materijal.'
+                ]);
+            }
+        }
     }
 
     /**
@@ -107,11 +136,21 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($post_id)
     {
+        $post = Post::find($post_id);
+
+        $post = Post::find($post_id);
         $success = $post->delete();
         return [
             'success' => $success,
         ];
+    }
+
+
+    public function getPost($post_id)
+    {
+        $post = Post::find($post_id);
+        return $post;
     }
 }
