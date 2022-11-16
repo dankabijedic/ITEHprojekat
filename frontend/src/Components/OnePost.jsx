@@ -43,12 +43,7 @@ function OnePost({ post, token, currentUser }) {
         <div className="blog-card__info">
           <h5>{post.sadrzaj}</h5>
           <p>
-            <a href="#" className="icon-link mr-3">
-              <i className="fa fa-pencil-square-o"></i> Tony Jahson
-            </a>
-            <a href="#" className="icon-link">
-              <i className="fa fa-comments-o"></i> 150
-            </a>
+            <a href="download.php?file=sample">Download</a>
           </p>
           <p>{post.datoteka}</p>
           <a href="#" className="btn btn--with-icon">

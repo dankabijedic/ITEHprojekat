@@ -103,6 +103,8 @@ class PostController extends Controller
             'predmet_id' => 'required',
             'sadrzaj' => 'required',
             'datoteka',
+            'user_id' => 'required',
+            'datoteka',
             'user_id' => 'required'
         ]);
 
@@ -139,14 +141,11 @@ class PostController extends Controller
     public function destroy($post_id)
     {
         $post = Post::find($post_id);
-
-        $post = Post::find($post_id);
         $success = $post->delete();
         return [
             'success' => $success,
         ];
     }
-
 
     public function getPost($post_id)
     {
