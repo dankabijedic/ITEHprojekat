@@ -228,7 +228,7 @@ useEffect(()=> {
       
       <Routes>
         <Route path="/" element={<Navbar token={token} addToken={addToken} cartNum={cartNum} currentUser={currentUser} getCourses={getCourses}/>}>
-         <Route path="courses" element={<Courses onAdd={addToCart} courses={courses} token={token} currentUser={currentUser}/>} />
+         <Route path="courses" element={<Courses onAdd={addToCart} courses={courses} token={token} currentUser={currentUser} setCourses={setCourses}/>} />
          <Route path="posts" element={<Posts token={token} currentUser={currentUser}/>} />
         <Route path="cart" element={<Cart cartCourses={cartCourses} cartNum={cartNum} totalPrice={totalPrice} token={token} currentUser={currentUser} onDelete={deleteCartItem}/>} />
         </Route>
@@ -236,11 +236,10 @@ useEffect(()=> {
         calcPrice={calcPrice} 
         getUserCart={getUserCart}/>} />
         <Route path="/register" element={<RegisterForm/>} /> 
-        <Route path="/add-course" element={<AddCourse token={token} />} />
+        <Route path="/add-course" element={<AddCourse token={token} setCourses={setCourses}/>} />
         <Route path="/update-course/:id" element={<EditCourse />} />
         <Route path="/add-post" element={<AddPost token={token} />} />
-        <Route path="/update-post/:id" element={<EditPost />} />
-        
+        <Route path="/update-post/:id" element={<EditPost />} />  
       </Routes>
     </BrowserRouter>
 

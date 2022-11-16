@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function AddCourse() {
+function AddCourse(setCourses) {
   const [courseInput, setCourse] = useState({
     naziv: "",
     broj_casova: "",
@@ -35,6 +35,9 @@ function AddCourse() {
       .then((res) => {
         console.log(courseInput);
         console.log(res.data);
+        axios.get("api/courses").then((result) => {
+          setCourses(result.data);
+        });
         navigate("/courses");
       })
       .catch((e) => {

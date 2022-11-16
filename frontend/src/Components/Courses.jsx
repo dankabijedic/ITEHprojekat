@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OneCourse from "./OneCourse";
 
-function Courses({ onAdd, courses, token, currentUser }) {
+function Courses({ onAdd, courses, token, currentUser, setCourses }) {
   const [data, setData] = useState(courses);
   const [sortType, setSortType] = useState("naziv1");
   const [inputText, setInputText] = useState("");
@@ -13,13 +13,13 @@ function Courses({ onAdd, courses, token, currentUser }) {
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
+
   let filteredData = "";
   if (courses != null) {
     filteredData = [...courses].filter((course) => {
       if (inputText === "") {
         return course;
       } else {
-        console.log(inputText);
         return course.naziv.toLowerCase().includes(inputText);
       }
     });
@@ -122,6 +122,8 @@ function Courses({ onAdd, courses, token, currentUser }) {
               onAdd={onAdd}
               token={token}
               currentUser={currentUser}
+              setCourses={setCourses}
+              courses={courses}
             />
           ))
         )}

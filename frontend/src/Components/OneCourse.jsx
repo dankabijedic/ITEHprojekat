@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { BsFillCartPlusFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import Courses from "./Courses";
 
-function OneCourse({ course, onAdd, token, currentUser }) {
+function OneCourse({ course, onAdd, token, currentUser, setCourses, courses }) {
   function onDelete(course) {
     var config = {
       headers: {
@@ -16,12 +18,16 @@ function OneCourse({ course, onAdd, token, currentUser }) {
         console.log(res);
         if (res.status === 200) {
           alert("Kurs je uspesno obrisan.");
+          axios.get("api/courses").then((result) => {
+            setCourses(result.data);
+          });
         } else {
           alert("Brisanje nije uspelo.", res.data.message, "error");
         }
       });
     }
   }
+
   return (
     <div className="card">
       <div className="photo-container">
@@ -35,7 +41,6 @@ function OneCourse({ course, onAdd, token, currentUser }) {
         <h3 className="card-title">{course.naziv}</h3>
         <p className="card-price">{course.cena}</p>
         <p className="card-description">{course.opis}</p>
-        {/* <p className="card-something">{currentUser.data}</p> */}
         {token == null ? (
           <div></div>
         ) : currentUser != null && currentUser.data.role == "1" ? (

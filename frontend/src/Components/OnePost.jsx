@@ -63,10 +63,6 @@ function OnePost({ post, token, currentUser }) {
             </div>
           ) : (
             <div></div>
-            // <button className="btn" onClick={() => onAdd(course.id)}>
-            //   <BsFillCartPlusFill />
-            //   <h2> Dodaj u korpu</h2>
-            // </button>
           )}
         </div>
       </article>
