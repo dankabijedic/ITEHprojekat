@@ -326,7 +326,7 @@ a {
   color: #fff;
   font-size: 20px;
   font-weight: 300;
-  padding: 16px 0;
+  padding: 25px 0;
   width: 290px;
   text-align: center;
 
@@ -384,7 +384,17 @@ a {
 }
 .blog-card {
   padding: 30px;
-  position: relative;
+  width: 50%;
+  padding-left: 3px;
+  padding-right: 3px;
+  display: grid;
+	grid-template-columns: 0.9fr 1fr;
+	margin: auto;
+	padding: 2.5em 0;
+	min-width: 1000px;
+	background-color: white;
+	border-radius: 5px;
+  margin-bottom: 3em;
 }
 
 .blog-card ,.date__box {
@@ -403,8 +413,10 @@ a {
 }
 
 .blog-card__background {
-   padding: 15px;
+   padding: 0.5em 0;
    background: white;
+   border-radius: 6px;
+
 }
 .card__background--wrapper{
    height: 100%;
@@ -414,11 +426,13 @@ a {
  }
 
 .card__background--main{
+  width: 50%;
    height: 100%;
    position: relative;
    transition: 300ms ease-in-out;
   background-repeat: no-repeat;
   background-size: cover;
+  
  }
 
 .card__background--layer {
@@ -429,9 +443,13 @@ a {
 
 .blog-card__head {
    height: 300px;
-   display: flex;
+   display: block;
     -items: center;
    justify-content: center;
+   margin: auto;
+   left: -3.5em;
+		top: 2em;
+		max-width: 130%;
   }
 .blog-card__info{
   z-index: 10;

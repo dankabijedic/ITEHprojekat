@@ -36,15 +36,13 @@ function OnePost({ post, token, currentUser }) {
         </div>
         <div className="blog-card__head">
           <span className="date__box">
-            <span className="date__day">11</span>
-            <span className="date__month">JAN</span>
+            <span className="date__day">17</span>
+            <span className="date__month">NOV</span>
           </span>
         </div>
         <div className="blog-card__info">
           <h5>{post.sadrzaj}</h5>
-          <p>
-            <a href="download.php?file=sample">Download</a>
-          </p>
+          
           <p>{post.datoteka}</p>
           <a href="#" className="btn btn--with-icon">
             <i className="btn-icon fa fa-long-arrow-right"></i>READ MORE
