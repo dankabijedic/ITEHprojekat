@@ -44,7 +44,6 @@ class KursController extends Controller
             'broj_casova' => 'required',
             'cena' => 'required',
             'opis',
-            'predmet_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -56,7 +55,6 @@ class KursController extends Controller
             'broj_casova' => $request->broj_casova,
             'cena' => $request->cena,
             'opis' => $request->opis,
-            'predmet_id' => $request->predmet_id,
         ]);
 
         return response()->json(['Kurs created successfully.', new KursResource($kurs)]);
@@ -108,7 +106,6 @@ class KursController extends Controller
             'broj_casova' => 'required',
             'cena' => 'required',
             'opis',
-            'predmet_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -122,7 +119,6 @@ class KursController extends Controller
                 $course->broj_casova = $request->input('broj_casova');
                 $course->cena = $request->input('cena');
                 $course->opis = $request->input('opis');
-                $course->predmet_id = $request->input('predmet_id');
                 $course->update();
 
                 return response()->json([

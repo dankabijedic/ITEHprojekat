@@ -4,10 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function AddPost() {
   const [postInput, setPost] = useState({
-    predmet_id: "",
+    naslov: "",
     sadrzaj: "",
-    datoteka: "",
-    user_id: "",
   });
 
   let navigate = useNavigate();
@@ -44,17 +42,17 @@ function AddPost() {
     <div className="container-fluid px-4">
       <div className="card mt-4">
         <div className="card-header">
-          <h4>Unesite materijal</h4>
+          <h4>Unesite objavu</h4>
         </div>
         <div className="card-body">
           <form onSubmit={submitPost}>
             <div className="mb-3">
               <label for="exampleInputPassword1" className="form-label">
-                Sadrzaj
+                Naslov
               </label>
               <input
                 type="text"
-                name="sadrzaj"
+                name="naslov"
                 onChange={handleInput}
                 className="form-control"
                 id="exampleInputPassword1"
@@ -62,11 +60,11 @@ function AddPost() {
             </div>
             <div className="mb-3">
               <label for="exampleInputPassword1" className="form-label">
-                Datoteka
+                Sadrzaj
               </label>
               <input
                 type="text"
-                name="datoteka"
+                name="sadrzaj"
                 onChange={handleInput}
                 className="form-control"
                 id="exampleInputPassword1"

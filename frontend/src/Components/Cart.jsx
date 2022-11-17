@@ -5,7 +5,7 @@ import CartItem from "./CartItem";
 
 const Cart = ({ cartCourses, cartNum, totalPrice, token, onDelete }) => {
   const [converter, setConverter] = useState();
-  const [currency, setCurrency] = useState();
+  const [currency, setCurrency] = useState("RSD");
   const [newPrice, setNewPrice] = useState(0);
 
   useEffect(() => {
@@ -39,33 +39,40 @@ const Cart = ({ cartCourses, cartNum, totalPrice, token, onDelete }) => {
     }
   }, [currency]);
 
+  // const checkOut = (e) => {
+  //   e.preventDefault();
+  //   cartCourses.map((oneC) => {
+  //     onDelete(oneC, e);
+  //   });
+  // };
+
   return (
     <div className="cart-container">
       {token == null ? (
         <h1>Ulogujte se da biste mogli da proizvode dodate u korpu.</h1>
       ) : (
-        <div className="cart-items">
-          <h1>Ovo je vasa korpa.</h1>
-          <div className="cart-items">
-            {cartCourses.map((cartItem) => (
-              <CartItem item={cartItem} onDelete={onDelete} />
-            ))}
-          </div>
-          <div className="cart-footer">
-            <div className="cart-amount">
-              Broj proizvoda u korpi je: {cartNum}
-            </div>
-            <div className="cart-amount">
-              {newPrice == 0 ? (
-                <h3>Ukupna cena je: {totalPrice}</h3>
-              ) : (
-                <h3>Ukupna cena je: {newPrice}</h3>
-              )}
+        <div>
+          <h1 style={{ textAlign: "center" }}>Ovo je vasa korpa.</h1>
 
-              <div style={{ position: "relative", float: "right" }}>
+          <div className="cart">
+            {console.log(cartCourses)}
+            {cartCourses != null ? (
+              <div className="cart-items" style={{ display: "grid" }}>
+                {cartCourses.map((cartItem) => (
+                  <CartItem item={cartItem} onDelete={onDelete} />
+                ))}
+              </div>
+            ) : (
+              <div></div>
+            )}
+            <div className="cart-footer">
+              <div className="cart-amount">
+                Broj proizvoda u korpi je: {cartNum}
+              </div>
+              <div>
                 <h3> Izaberite valutu: </h3>
                 <select
-                  style={{ position: "inherit" }}
+                  style={{}}
                   onChange={(e) => setCurrency(e.target.value)}
                 >
                   <option value="RSD">RSD</option>
@@ -73,8 +80,22 @@ const Cart = ({ cartCourses, cartNum, totalPrice, token, onDelete }) => {
                   <option value="BAM">BAM</option>
                 </select>
               </div>
+              <div className="cart-amount">
+                {newPrice == 0 ? (
+                  <h3>Ukupna cena je: {totalPrice}</h3>
+                ) : (
+                  <h3 style={{ lineHeight: "2.75rem" }}>
+                    Ukupna cena je: {newPrice} {currency}
+                  </h3>
+                )}
+              </div>
+              <a
+                className="btn"
+                // onClick={(e) => checkOut(e)}
+              >
+                Kupite
+              </a>
             </div>
-            <a className="btn">Kupite</a>
           </div>
         </div>
       )}

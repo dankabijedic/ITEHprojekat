@@ -157,8 +157,10 @@
 
 #cart-item .card-body {
   margin: 10px;
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
+  display: grid;
+
 }
 
 .card h3 {
@@ -387,7 +389,7 @@ a {
   width: 50%;
   padding-left: 3px;
   padding-right: 3px;
-  display: grid;
+  /* display: grid; */
 	grid-template-columns: 0.9fr 1fr;
 	margin: auto;
 	padding: 2.5em 0;

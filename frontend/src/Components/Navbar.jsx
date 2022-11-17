@@ -34,13 +34,13 @@ function Navbar({ cartNum, token, addToken, currentUser, getCourses }) {
           <Link to="/courses">Kursevi</Link>
         </div>
         <div className="btn">
-          <Link to="/posts">Materijali</Link>
+          <Link to="/posts">Blog</Link>
         </div>
         <div className="btn">
           <Link to="/login">Login</Link>
         </div>
         <div className="btn">
-          <Link to="/register">Register</Link>
+          <Link to="/register">Registrujte se</Link>
         </div>
         <div
           className="links"
@@ -53,16 +53,13 @@ function Navbar({ cartNum, token, addToken, currentUser, getCourses }) {
       </div>
     );
   } else if (currentUser != null && currentUser.data.role == "1") {
-    {
-      console.log(currentUser.data.role);
-    }
     AuthButtons = (
       <div className="navBar">
         <div className="btn">
           <Link to="/courses">Kursevi</Link>
         </div>
         <div className="btn">
-          <Link to="/posts">Materijali</Link>
+          <Link to="/posts">Blog</Link>
         </div>
         <div className="btn">
           <Link to="/add-course">Dodaj kurs</Link>
@@ -90,7 +87,7 @@ function Navbar({ cartNum, token, addToken, currentUser, getCourses }) {
           <Link to="/courses">Kursevi</Link>
         </div>
         <div className="btn">
-          <Link to="/posts">Materijali</Link>
+          <Link to="/posts">Blog</Link>
         </div>
         <div className="btn" onClick={getCourses}>
           <Link to="/cart" className="cart-items">

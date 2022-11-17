@@ -39,10 +39,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'predmet_id' => 'required',
+            'naslov' => 'required',
             'sadrzaj' => 'required',
-            'datoteka',
-            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -50,10 +48,8 @@ class PostController extends Controller
         }
 
         $post = Post::create([
-            'predmet_id' => request('predmet_id'),
+            'naslov' => request('naslov'),
             'sadrzaj' => request('sadrzaj'),
-            'datoteka' => request('datoteka'),
-            'user_id' => Auth::user()->id
         ]);
 
         return response()->json(['Post created successfully.', new PostResource($post)]);
@@ -100,12 +96,8 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'predmet_id' => 'required',
+            'naslov' => 'required',
             'sadrzaj' => 'required',
-            'datoteka',
-            'user_id' => 'required',
-            'datoteka',
-            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -115,10 +107,8 @@ class PostController extends Controller
         } else {
             $post = Post::find($id);
             if ($post) {
-                $post->predmet_id = $request->input('predmet_id');
+                $post->naslov = $request->input('naslov');
                 $post->sadrzaj = $request->input('sadrzaj');
-                $post->datoteka = $request->input('datoteka');
-                $post->user_id = $request->input('user_id');
                 $post->update();
 
                 return response()->json([

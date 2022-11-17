@@ -18,10 +18,8 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'post_id' => $this->resource->post_id,
+            'naslov' => $this->resource->naslov,
             'sadrzaj' => $this->resource->sadrzaj,
-            'datoteka' => $this->resource->datoteka,
-            'user_id' => $this->resource->user
         ];
     }
 }

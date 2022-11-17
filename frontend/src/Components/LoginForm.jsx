@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm({ addToken, getCurrentUser, currentUser, token }) {
   const [userData, setUserData] = useState({
@@ -51,19 +51,17 @@ function LoginForm({ addToken, getCurrentUser, currentUser, token }) {
               className="my-5 display-5 fw-bold ls-tight"
               style={{ color: "hsl(218, 81%, 95%)" }}
             >
-              The best offer <br />
-              <span style={{ color: "hsl(218, 81%, 75%)" }}>
-                for your business
-              </span>
+              Dobrodosli
             </h1>
             <p
               className="mb-4 opacity-70"
               style={{ color: "hsl(218, 81%, 85%)" }}
             >
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Temporibus, expedita iusto veniam atque, magni tempora mollitia
-              dolorum consequatur nulla, neque debitis eos reprehenderit quasi
-              ab ipsum nisi dolorem modi. Quos?
+              Ukoliko nemate vec nalog
+              <Link to="/register" style={{ color: "hsl(218, 81%, 75%)" }}>
+                {" "}
+                registrujte se
+              </Link>
             </p>
           </div>
 

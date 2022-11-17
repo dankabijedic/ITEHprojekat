@@ -11,9 +11,8 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'naslov',
         'sadrzaj',
-        'datoteka',
-        'user_id',
     ];
 
     public function user()

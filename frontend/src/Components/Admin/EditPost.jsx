@@ -4,10 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditPost() {
   const [postInput, setPost] = useState({
-    id: "",
+    naslov: "",
     sadrzaj: "",
-    datoteka: "",
-    user_id: "",
   });
 
   const post_id = useParams();
@@ -42,10 +40,8 @@ function EditPost() {
   const updatePost = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("id", postInput.id);
+    formData.append("naslov", postInput.naslov);
     formData.append("sadrzaj", postInput.sadrzaj);
-    formData.append("datoteka", postInput.datoteka);
-    formData.append("user_id", postInput.user_id);
 
     var config = {
       headers: {
@@ -57,7 +53,7 @@ function EditPost() {
       .post(`/api/update-post/${post_id.id}`, formData, config)
       .then((res) => {
         if (res.data.status === 200) {
-          alert("success", res.data.message, "error");
+          alert("Post je uspesno izmenjen.");
         } else if (res.data.status === 422) {
           alert("Sva polja su neophodna.", "", "error");
         } else if (res.data.status === 404) {
@@ -74,22 +70,22 @@ function EditPost() {
           <form id="" onSubmit={updatePost}>
             <div className="mb-3">
               <label for="exampleInputPassword1" className="form-label">
-                Sadrzaj
+                Naslov
               </label>
               <input
                 type="text"
-                name="sadrzaj"
+                name="naslov"
                 onChange={handleInput}
                 className="form-control"
               ></input>
             </div>
             <div className="mb-3">
               <label for="exampleInputPassword1" className="form-label">
-                Datoteka
+                Sadrzaj
               </label>
               <input
                 type="text"
-                name="datoteka"
+                name="sadrzaj"
                 onChange={handleInput}
                 className="form-control"
               ></input>

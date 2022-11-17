@@ -1,9 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React from "react";
 import { BsFillCartPlusFill } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import Courses from "./Courses";
+import { Link } from "react-router-dom";
 
 function OneCourse({ course, onAdd, token, currentUser, setCourses, courses }) {
   function onDelete(course) {
@@ -33,7 +31,7 @@ function OneCourse({ course, onAdd, token, currentUser, setCourses, courses }) {
       <div className="photo-container">
         <img
           className="card-img-top"
-          src="https://picsum.photos/200"
+          src="https://img.freepik.com/free-vector/app-development-concept-with-programming-languages_23-2148688949.jpg?w=2000"
           alt="Neka slika"
         />
       </div>

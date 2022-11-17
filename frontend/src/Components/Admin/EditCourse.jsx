@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-function EditCourse() {
+function EditCourse({ setCourses }) {
   const [courseInput, setCourse] = useState({
     naziv: "",
     broj_casova: "",
@@ -12,7 +12,6 @@ function EditCourse() {
   });
 
   const course_id = useParams();
-  console.log(course_id.id);
   const handleInput = (e) => {
     e.persist();
     setCourse({ ...courseInput, [e.target.name]: e.target.value });
@@ -47,7 +46,6 @@ function EditCourse() {
     formData.append("broj_casova", courseInput.broj_casova);
     formData.append("cena", courseInput.cena);
     formData.append("opis", courseInput.opis);
-    formData.append("predmet_id", courseInput.predmet_id);
 
     var config = {
       headers: {
@@ -58,11 +56,15 @@ function EditCourse() {
     axios
       .post(`/api/update-course/${course_id.id}`, formData, config)
       .then((res) => {
-        if (res.data.status === 200) {
-          alert("success", res.data.message, "error");
-        } else if (res.data.status === 422) {
+        console.log(res);
+        if (res.status === 200) {
+          alert("Kurs je uspesno izmenjen.");
+          axios.get("api/courses").then((result) => {
+            setCourses(result.data);
+          });
+        } else if (res.status === 422) {
           alert("Sva polja su neophodna.", "", "error");
-        } else if (res.data.status === 404) {
+        } else if (res.status === 404) {
           alert("Error", res.data.message, "error");
         }
         navigate("/courses");
@@ -84,15 +86,7 @@ function EditCourse() {
                 name="naziv"
                 onChange={handleInput}
                 className="form-control"
-              >
-                {/* {authorlist.map((item) => {
-                  return (
-                    <option value={item.id} key={item.id}>
-                      {item.name}
-                    </option>
-                  );
-                })} */}
-              </input>
+              ></input>
             </div>
             <div className="mb-3">
               <label for="exampleInputPassword1" className="form-label">
@@ -102,7 +96,6 @@ function EditCourse() {
                 type="text"
                 name="broj_casova"
                 onChange={handleInput}
-                // value={courseInput.naziv}
                 className="form-control"
               ></input>
               <span></span>
@@ -114,10 +107,9 @@ function EditCourse() {
               <input
                 type="text"
                 className="form-control"
-                // id="exampleInputEmail1"
+                id="exampleInputEmail1"
                 name="cena"
                 onChange={handleInput}
-                // value={bookInput.slug}
               />
             </div>
             <div className="mb-3">
@@ -127,23 +119,9 @@ function EditCourse() {
               <input
                 type="text"
                 className="form-control"
-                // id="exampleInputEmail1"
+                id="exampleInputEmail1"
                 name="opis"
                 onChange={handleInput}
-                // value={bookInput.price}
-              />
-            </div>
-            <div className="mb-3">
-              <label for="exampleInputPassword1" className="form-label">
-                Predmet_id
-              </label>
-              <input
-                type="text"
-                name="predmet_id"
-                className="form-control"
-                // id="exampleInputPassword1"
-                onChange={handleInput}
-                // value={bookInput.title}
               />
             </div>
 

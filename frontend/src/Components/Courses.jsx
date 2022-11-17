@@ -1,7 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
 import OneCourse from "./OneCourse";
 
 function Courses({ onAdd, courses, token, currentUser, setCourses }) {
@@ -69,27 +68,30 @@ function Courses({ onAdd, courses, token, currentUser, setCourses }) {
 
   return (
     <div style={{ background: "#43C59E", alignItems: "flex-end" }}>
-      <div>
-        <h3>Search</h3>
-        <div className="search">
-          <input
-            className="search"
-            label="Search"
-            onChange={inputHandler}
-          ></input>
+      <div style={{ display: "inline-flex" }}>
+        <div style={{ marginLeft: "30rem", marginTop: "3rem" }}>
+          <h3>Search</h3>
+          <div className="search">
+            <input
+              className="search"
+              label="Search"
+              onChange={inputHandler}
+            ></input>
+            <BsSearch />
+          </div>
         </div>
-      </div>
-      <div style={{ position: "relative", float: "right" }}>
-        <h3>Sortirajte prema:</h3>
-        <select
-          style={{ position: "inherit" }}
-          onChange={(e) => setSortType(e.target.value)}
-        >
-          <option value="naziv1">Nazivu(rastuce)</option>
-          <option value="naziv2">Nazivu(opadajuce)</option>
-          <option value="cena1">Ceni(rastuce)</option>
-          <option value="cena2">Ceni(opadajuce)</option>
-        </select>
+        <div style={{ marginLeft: "35rem", marginTop: "3rem" }}>
+          <h3 style={{ marginLeft: "0rem" }}>Sortirajte prema:</h3>
+          <select
+            // style={{ position: "inherit" }}
+            onChange={(e) => setSortType(e.target.value)}
+          >
+            <option value="naziv1">Nazivu(rastuce)</option>
+            <option value="naziv2">Nazivu(opadajuce)</option>
+            <option value="cena1">Ceni(rastuce)</option>
+            <option value="cena2">Ceni(opadajuce)</option>
+          </select>
+        </div>
       </div>
       <div className="all-courses">
         {courses == null ? (

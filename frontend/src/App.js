@@ -3,7 +3,7 @@ import Courses from "./Components/Courses";
 import Navbar from "./Components/Navbar";
 import Cart from "./Components/Cart";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Posts from "./Components/Posts";
 import LoginForm from "./Components/LoginForm";
 import RegisterForm from "./Components/RegisterForm";
@@ -18,6 +18,8 @@ function App() {
   const [cartNum, setCartNum] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [token, setToken] = useState();
+  const [cartCourses, setCartCourses] = useState([]);
+
   
   const [courses, setCourses] = useState();
   useEffect(() => {
@@ -25,20 +27,27 @@ function App() {
       axios.get("api/courses").then((res) => {
         setCourses(res.data);
       });
+      console.log(courses);
     }
   }, [courses]);
 
   const updateCart = (course) => {
     console.log(cartCourses);
     console.log(course);
+    if(cartCourses == null) {
+      console.log("Ovde  je");
+      setCartCourses([course]); 
+    } else {
     if(!cartCourses.includes(course)) {
     setCartCourses([...cartCourses, course]);
     }
+  }
     calcPrice(cartCourses);
   }
 
   const refreshCart = (course_id) => {
-    setCartCourses((current) => current.filter((removeCourse) => removeCourse.id != course_id));
+    setCartCourses((current) => {
+      current.filter((removeCourse) => removeCourse.id != course_id)});
     setCartNum(cartNum  - 1);
     calcPrice();
   };
@@ -56,11 +65,14 @@ function App() {
 
 
   
+    if(cartCourses == null ){
+      isAdded = false;
+    } else {
     cartCourses.map((oneCartCourse) => {
       if(oneCartCourse.id === course.id) {
         isAdded = true;
       }
-    })
+    })};
 
     if(isAdded === false) {
         const data = {
@@ -157,7 +169,7 @@ const getUserCart = () => {
     if (isMounted) {
      if(count === 0) {
       console.log(currentUser);
-
+      console.log(res.data.cart);
         setCart(res.data.cart);
         setCartNum(res.data.cart.length);
         isMounted = false;
@@ -169,7 +181,6 @@ const getUserCart = () => {
   };
 };
 
-const [cartCourses, setCartCourses] = useState([]);
 
 function getCourses() {
   console.log(currentUser);
@@ -180,7 +191,7 @@ function getCourses() {
     cart.map((newCartItem) => {
       if (newCartItem.user_id == currentUser.data.id) {
        axios.get("api/courses/" + newCartItem.course_id).then((res) => {
-      
+      if(cartCourses!= null) {
         cartCourses.map((courseHelp) => {
           if(courseHelp.id === newCartItem.course_id) {
             exists = true;
@@ -189,6 +200,7 @@ function getCourses() {
         if(exists === false){
         setCartCourses([...cartCourses, res.data]);
         }
+      }
       });
     }
   });
@@ -200,7 +212,7 @@ function calcPrice() {
   if(token != null ) {
   console.log("Ovde je doslo");
   console.log(cartCourses);
-  if(cartCourses.length == 0) {
+  if(cartCourses == null) {
     setTotalPrice(0);
   } else {
   cartCourses.map((oneC) => {
@@ -237,7 +249,7 @@ useEffect(()=> {
         getUserCart={getUserCart}/>} />
         <Route path="/register" element={<RegisterForm/>} /> 
         <Route path="/add-course" element={<AddCourse token={token} setCourses={setCourses}/>} />
-        <Route path="/update-course/:id" element={<EditCourse />} />
+        <Route path="/update-course/:id" element={<EditCourse setCourses={setCourses}/>} />
         <Route path="/add-post" element={<AddPost token={token} />} />
         <Route path="/update-post/:id" element={<EditPost />} />  
       </Routes>

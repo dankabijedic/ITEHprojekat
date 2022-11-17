@@ -18,9 +18,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            'naslov' => $this->faker->text(),
             'sadrzaj' => $this->faker->text(),
-            'datoteka' => $this->faker->text(),
-            'user_id' => User::factory(),
         ];
     }
 }

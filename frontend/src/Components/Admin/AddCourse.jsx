@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function AddCourse(setCourses) {
+function AddCourse({ setCourses }) {
   const [courseInput, setCourse] = useState({
     naziv: "",
     broj_casova: "",
@@ -30,20 +29,21 @@ function AddCourse(setCourses) {
       },
     };
 
-    axios
-      .post("api/add-course", courseInput, config)
-      .then((res) => {
-        console.log(courseInput);
-        console.log(res.data);
+    axios.post("api/add-course", courseInput, config).then((res) => {
+      console.log(courseInput);
+      if (res.status === 200) {
+        alert("Kurs je uspesno dodat.");
         axios.get("api/courses").then((result) => {
+          console.log(result);
           setCourses(result.data);
         });
         navigate("/courses");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      } else {
+        alert("Neuspesno dodavanje.", res.data.message, "error");
+      }
+    });
   }
+
   return (
     <div className="container-fluid px-4">
       <div className="card mt-4">
@@ -100,19 +100,6 @@ function AddCourse(setCourses) {
                 onChange={handleInput}
               />
             </div>
-            <div className="mb-3">
-              <label for="exampleInputPassword1" className="form-label">
-                Predmet id
-              </label>
-              <input
-                type="text"
-                name="predmet_id"
-                className="form-control"
-                id="exampleInputPassword1"
-                onChange={handleInput}
-              />
-            </div>
-
             <button type="submit" className="btn btn-primary px-4 mt-2">
               Submit
             </button>

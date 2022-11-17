@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('naslov');
             $table->string('sadrzaj');
-            $table->string('datoteka');
-            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
